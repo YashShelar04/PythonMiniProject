@@ -15,8 +15,9 @@ GRAVITY = 0.25
 JUMP = -5
 
 # Set up the screen
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption('Flappy Bird')
+
 
 # Game variables
 bird_x = 50
@@ -91,9 +92,22 @@ while running:
         font = pygame.font.Font(None, 48)
         text = font.render("Game Over", True, (255, 255, 255))
         screen.blit(text, (WIDTH // 2 - text.get_width() // 2, HEIGHT // 2 - text.get_height() // 2))
+        # Draw score and restart message
         font = pygame.font.Font(None, 36)
         score_text = font.render(f"Score: {score}", True, (255, 255, 255))
-        screen.blit(score_text, (WIDTH // 2 - score_text.get_width() // 2, HEIGHT // 2 + text.get_height()))
+        restart_text = font.render("Press SPACE to restart", True, (255, 255, 255))
+
+        # Calculate the position of the score and restart message
+        score_text_rect = score_text.get_rect()
+        restart_text_rect = restart_text.get_rect()
+        score_text_rect.center = (WIDTH // 2, HEIGHT // 2 + score_text_rect.height + 10)
+        restart_text_rect.center = (WIDTH // 2, HEIGHT // 2 + score_text_rect.height + 50)
+
+        # Blit the score and restart message onto the screen
+        screen.blit(score_text, score_text_rect)
+        screen.blit(restart_text, restart_text_rect)
+
+        # Update the display
         pygame.display.flip()
 
         # Wait for a key press to restart the game
